@@ -1,0 +1,12 @@
+input_word = "привааппіт"
+vowels = ""
+consonants = ""
+for letter in input_word:
+	if letter in "аеєиіоуяюї":
+    	vowels += letter
+	else:
+    	consonants += letter
+print("Голосні:")
+print(vowels)
+print("Приголосні:")
+print(consonants)
