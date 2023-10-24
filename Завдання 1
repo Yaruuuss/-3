@@ -1,0 +1,9 @@
+word = "ітераційнопрограмований" 
+length = len(word)
+middle = length // 2
+
+result = ""
+for i in range(5, middle + 1, 2):
+    result += word[i]
+
+print(result)
