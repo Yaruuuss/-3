@@ -1,0 +1,58 @@
+baggage_data = {
+    1: {'кількість_речей': 3, 'загальна_вага': 45},
+    2: {'кількість_речей': 1, 'загальна_вага': 20},
+    3: {'кількість_речей': 2, 'загальна_вага': 35},
+    4: {'кількість_речей': 3, 'загальна_вага': 20},
+    5: {'кількість_речей': 1, 'загальна_вага': 25 },
+}
+def display_baggage_data():
+    for passenger, data in baggage_data.items():
+        print(f'Пасажир {passenger}: Кількість речей: {data["кількість_речей"]}, Загальна вага: {data["загальна_вага"]} кг')
+def add_new_baggage():
+    passenger = int(input('Введіть номер пасажира: '))
+    кількість_речей = int(input('Введіть кількість речей: '))
+    загальна_вага = float(input('Введіть загальну вагу: '))
+    baggage_data[passenger] = {'кількість_речей': кількість_речей, 'загальна_вага': загальна_вага}
+    print('Дані пасажира додано до словника.')
+def delete_baggage():
+    passenger = int(input('Введіть номер пасажира, якого бажаєте видалити: '))
+    if passenger in baggage_data:
+        del baggage_data[passenger]
+        print(f'Пасажир {passenger} видалений із словника.')
+    else:
+        print('Пасажир не знайдений у словнику.')
+def solve_tasks():
+    count_more_than_two_items = sum(1 for data in baggage_data.values() if data['кількість_речей'] > 2)
+    print(f'Кількість пасажирів, які мають більше двох речей: {count_more_than_two_items}')
+    has_light_baggage = any(data['кількість_речей'] == 1 and data['загальна_вага'] < 25 for data in baggage_data.values())
+    if has_light_baggage:
+        print('Є пасажир з багажем вагою менше 25 кг, який складається з однієї речі.')
+    else:
+        print('Немає пасажирів з багажем вагою менше 25 кг, які складається з однієї речі.')
+    avg_item_weight = sum(data['загальна_вага'] / data['кількість_речей'] for data in baggage_data.values())
+    matching_baggage = [passenger for passenger, data in baggage_data.items() if abs(avg_item_weight - (data['загальна_вага'] / data['кількість_речей'])) <= 0.5]
+    if matching_baggage:
+        print(f'Номери багажів, які відповідають умові: {matching_baggage}')
+    else:
+        print('Немає багажів, які відповідають умові.')
+while True:
+    print('Меню опцій:')
+    print('1. Виведення на екран всіх значень словника')
+    print('2. Додавання нового запису до словника')
+    print('3. Видалення запису зі словника')
+    print('4. Розв\'язання завдань')
+    print('5. Вихід')
+    choice = int(input('Виберіть опцію:'))
+    if choice == 1:
+        display_baggage_data()
+    elif choice == 2:
+        add_new_baggage()
+    elif choice == 3:
+        delete_baggage()
+    elif choice == 4:
+        solve_tasks()
+    elif choice == 5:
+        break
+    else:
+        print('Невірний вибір опції. Спробуйте ще раз.')
+print('Програма завершена.')
