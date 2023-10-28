@@ -1,9 +1,22 @@
-word = "ітераційнопрограмований" 
-length = len(word)
-middle = length // 2
+N = int(input("Введіть кількість елементів: "))
 
-result = ""
-for i in range(5, middle + 1, 2):
-    result += word[i]
 
-print(result)
+array = []
+
+
+for i in range(N):
+    element = float(input(f"Введіть {i+1}-й елемент: "))
+    array.append(element)
+
+
+min_negative_element = None
+for element in array:
+    if element < 0:
+        if min_negative_element is None or element < min_negative_element:
+            min_negative_element = element
+
+
+if min_negative_element is not None:
+    print(f"Мінімальний від'ємний елемент: {min_negative_element}")
+else:
+    print("У масиві немає від'ємних елементів.")
