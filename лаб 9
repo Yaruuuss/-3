@@ -1,0 +1,43 @@
+def Open(file_name, mode):
+    try:
+        file = open(file_name, mode)
+    except FileNotFoundError:
+        print("File", file_name, "wasn't found!")
+        return None
+    except IOError:
+        print("Error opening file", file_name)
+        return None
+    else:
+        print("File", file_name, "was opened successfully!")
+        return file
+
+# а) Створює текстовий файл TF26_1 із рядків латинських букв різної довжини
+file1_name = "TF26_1.txt"
+file_1_w = Open(file1_name, "w")
+if file_1_w is not None:
+    file_1_w.write("Hello i am Bilousov Yaroslav from IT-22")
+    print("Information was successfully added to", file1_name)
+    file_1_w.close()
+    print("File", file1_name, "was closed!")
+
+# б) Читає вміст файла TF26_1, замінює великі літери на відповідні малі і записує його у файл TF26_2
+file2_name = "TF26_2.txt"
+file_2_r = Open(file1_name, "r")
+file_2_w = Open(file2_name, "w")
+if file_2_r is not None and file_2_w is not None:
+    content = file_2_r.read()
+    content_lower = content.lower()
+    file_2_w.write(content_lower)
+    file_2_r.close()
+    file_2_w.close()
+    print("Files were closed!")
+
+# в) Читає вміст файла TF26_2 і друкує його по рядках
+print("New content of", file2_name, ":")
+file_3_r = Open(file2_name, "r")
+if file_3_r is not None:
+    for line in file_3_r:
+        print(line.strip())
+
+    print("File", file2_name, "was closed!")
+    file_3_r.close()
