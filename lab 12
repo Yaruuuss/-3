@@ -1,0 +1,92 @@
+import json
+passengers = [{"Surname" : "Ivanov",
+               "Name" : "Ivan",
+               "Luggage" : {"Items" : 3,
+                            "Weight" : 15}},
+              {"Surname" : "Petrov",
+               "Name" : "Petro",
+               "Luggage" : {"Items" : 2,
+                            "Weight" : 10}},
+              {"Surname" : "Sidorov",
+               "Name" : "Sergey",
+               "Luggage" : {"Items" : 4,
+                            "Weight" : 20}},
+              {"Surname" : "Kuznetsov",
+               "Name" : "Alexey",
+               "Luggage" : {"Items" : 1,
+                            "Weight" : 5}},
+              {"Surname" : "Smirnov",
+               "Name" : "Andrey",
+               "Luggage" : {"Items" : 2,
+                            "Weight" : 25}},
+              {"Surname" : "Popov",
+               "Name" : "Nikolay",
+               "Luggage" : {"Items" : 3,
+                            "Weight" : 30}},
+              {"Surname" : "Sokolov",
+               "Name" : "Dmitry",
+               "Luggage" : {"Items" : 1,
+                            "Weight" : 3}},
+              {"Surname" : "Novikov",
+               "Name" : "Vladimir",
+               "Luggage" : {"Items" : 2,
+                            "Weight" : 8}},
+              {"Surname" : "Morozov",
+               "Name" : "Oleg",
+               "Luggage" : {"Items" : 3,
+                            "Weight" : 12}},
+              {"Surname" : "Zaitsev",
+               "Name" : "Yuriy",
+               "Luggage" : {"Items" : 4,
+                            "Weight" : 18}}]
+jsonData = json.dumps(passengers)
+with open("data.json", "wt") as file:
+    file.write(jsonData)
+file.close()
+while True:
+    print("Виберіть опцію:\n 1 - Додати дані\n 2 - Переглянути дані\n 3 - Знайти пасажирів, які мають більше двох речей\n 4 - Визначити кількість пасажирів за вагою багажу\n 5 - Вийти")
+    x = input("Виберіть опцію:\n")
+    x = int(x)
+    if x == 1:
+        with open("data.json", "at") as file:
+            passengers = json.loads(jsonData)
+            def add_passenger(data):
+                print("Додати: ")
+                Surname = input("Прізвище:")
+                Name = input("Ім'я:")
+                Items = input("Кількість речей:")
+                Weight = input("Вага багажу:")
+                data.append({"Surname": Surname, "Name": Name, "Luggage": {"Items": Items, "Weight": Weight}})
+                return data
+            passengers = add_passenger(passengers)
+            jsonData = json.dumps(passengers)
+            file.write(jsonData)
+            file.close()
+    if x == 2:
+        with open("data.json", "rt") as file:
+            passengers = json.loads(jsonData)
+            print(*passengers, sep='\n')
+    if x == 3:
+        with open("data.json", "rt") as file:
+            passengers = json.loads(jsonData)
+            result = [{key: value for key, value in passenger.items() if key  in ['Surname', 'Name', 'Luggage']}
+                  for passenger in passengers if passenger['Luggage']['Items'] > 2]
+            print(*result, sep='\n')
+    if x == 4:
+        with open("data.json", "rt") as file:
+            passengers = json.loads(jsonData)
+            less_5 = 0
+            from_5_to_25 = 0
+            more_25 = 0
+            for passenger in passengers:
+                if passenger['Luggage']['Weight'] < 5:
+                    less_5 += 1
+                elif passenger['Luggage']['Weight'] > 25:
+                    more_25 += 1
+                else:
+                    from_5_to_25 += 1
+            print(f"Кількість пасажирів, у яких вага багажу менше 5 кг: {less_5}")
+            print(f"Кількість пасажирів, у яких вага багажу від 5 до 25 кг: {from_5_to_25}")
+            print(f"Кількість пасажирів, у яких вага багажу перевищує 25 кг: {more_25}")
+    if x == 5:
+        quit(0)
